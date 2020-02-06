@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<title></title>
+<link href="css/style.css" rel="stylesheet">
+<style type="text/css">
+
+/* Created by Nomeh Uchenna Gabriel */
+
+
+
+body {
+    background-color: #111;
+}
+
+#battery {
+   background-color: none; 
+   color: lime;
+   text-align: center;
+   height: 90px;
+   border: 2px solid #dff;
+   width: 140px;
+   position: absolute;
+   transform: rotate(90deg);
+   top: 95px;
+   left: 90px;
+   border-radius: 0px 5px 5px 0px;
+   overflow: hidden;
+}
+
+#batt {
+   background-color:none; 
+   color: #070;
+   text-shadow: .5px .5px black;
+   font-weight: bolder;
+   text-align: center;
+   height: 140px;
+   border: unset; 
+   padding-top: 15%;
+   width: 90px;
+   position: absolute;
+   top: 72px;
+   left: 117px;
+   overflow: hidden;
+   border-radius: 5px;
+   z-index: 3;
+}
+#bat0 {
+   background-color: #dff; 
+   height: 90px;
+   width: unset;
+   font-size: .1em;
+   border: none;
+   float: right;
+   text-align: center;
+} 
+
+#bat1 {
+   background-color: #111; 
+   height: 7px;
+   border-top: 2px solid #dff; 
+   border-left: 2px solid #dff; 
+   border-right: 2px solid #dff; 
+   border-bottom: 1px solid #555; 
+   width: 14px;
+   position: absolute;
+   top: 61px;
+   border-radius: 4px 4px 1px 1px;
+   left: 153px;
+   z-index: 5;
+}
+#bat1a {
+   background: #111;
+   border-radius: 100%;
+   height: 5px;
+   border: 1px solid #dff; 
+   width: 90px;
+   position: absolute;
+   top: 67px;
+   left: 116px;
+   z-index: 4;
+}
+
+#det {
+   position: absolute; 
+   width: 85px;
+   height: 35px;
+   background-color: none;
+   top: 160px;
+   text-align: center;
+   color: #070;
+   left: 120px;
+   transition: .5s;
+   
+}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- Created by Nomeh Uchenna Gabriel-->
+
+ <div id="batt"></div>
+     <div id="battery">
+         <div id="bat0"></div>
+         </div> 
+         <div id="bat1"></div>
+        <div id="bat1a"></div>
+        <div id="det"></div>
+    
+
+
+<script src="js/jquery-1.3.1.min.js"></script>
+<script type="text/javascript">
+
+// Created by Nomeh Uchenna Gabriel
+
+window.onload = function battr()  { navigator.getBattery().then(function(battery) 
+{ 
+function updateAllBatteryInfo(){ 
+updateChargeInfo();  
+  } 
+updateAllBatteryInfo(); 
+battery.addEventListener('chargingchange', function (){ 
+updateChargeInfo(); 
+}); 
+function updateChargeInfo(){ 
+var f = document.getElementById('bat0');
+var ba = (battery.level*100) + "%";
+var ba2 = (battery.level*100);
+f.style.width = ba
+if (battery.level*100 <= 15 && battery.charging == false){ 
+
+document.getElementById('battery').style.border = "2px solid red"
+document.getElementById('batt').style.color = "#070"
+document.getElementById('bat1a').style.border = "1px solid red" 
+document.getElementById('bat1').style.border = "1px solid red" 
+f.style.background = "red"
+document.getElementById('det').innerHTML = "<small>battery low</small> <br>" 
+}
+else if (battery.level == 1){  
+ document.getElementById('det').style.top = "120px"
+f.style.background = "#dff";
+document.getElementById('det').innerHTML = ba + "<br> <small>battery full</small> " 
+}
+else if (battery.charging == true && battery.level < 1){
+document.getElementById('batt').style.color = "orange"
+ f.style.background = "green"  
+}
+
+else {
+    f.style.background = "#dff";
+}
+if( ba2 < 15){
+    f.style.background = "red";
+    $('#batt').css("color" , 'red')
+}
+
+if (battery.level < 1) {
+document.getElementById('batt').innerHTML = (
+
+battery.charging ? "<small> charging... </small> <br>" + ba :
+ ba)}
+ 
+}
+ 
+setInterval(updateChargeInfo, 1);
+});
+
+
+}
+</script>
+</body>
+</html>
